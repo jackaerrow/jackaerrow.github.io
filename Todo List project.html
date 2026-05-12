@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--mainstyles-->
+
+    <!--card styles-->
+    <style>
+        .card {
+            width: 200px;
+            height: 200px;
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        .card-front {
+            background-color: #2196f3;
+            color: #fff;
+        }
+
+        .card-back {
+            background-color: #f44336;
+            color: #fff;
+            transform: rotateY(180deg);
+        }        
+    </style>
+    <!--drag and drop styles-->
+    <style>
+        #drop-area {
+            background-color: rgb(117, 117, 92);
+            width: 200px;
+            height: 200px;
+        }
+        .box {            
+            display: flex;
+            width: 230px;
+            height: 200px;
+            background-color: rgba(196, 238, 44, 0.789);
+            margin: 5px;
+            flex-direction: column;
+            border-radius: 5px;
+            padding: 5px;
+            margin-left: 30px;
+            margin-right: 30px;
+
+        }
+        .zoneContainer {
+
+            background-color: burlywood;
+            padding: 10px;
+            margin: 30px auto 10px;
+            
+        }
+        #zoneInput {
+            font-size: large;
+            border: 0;
+            background-color: transparent;
+            width: auto;
+            text-align: center;
+
+        }
+        #zoneInput:focus {
+            outline: none;
+            text-align: center;
+        }
+        #zoneInput::placeholder {
+            font-weight: bold;
+            text-align: center;
+        }
+        #dropContainer {
+            display: flex;
+            justify-content: center;
+            
+        }
+        
+        #drag {
+            text-decoration: none;
+        }
+
+        .canDrag {
+            background-color: #2196f3;
+            width: auto;
+            height: auto;
+            word-wrap: break-word;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .zoneBtn {
+            
+        }
+    </style>
+    <style>
+
+        #navbar {
+            display: flex;
+        }
+
+        #navbar li {
+            display: inline;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #ffffffdd;
+        }
+        a:visited {
+            color: #fff;
+        }
+
+        nav {
+            background-color: rgb(82, 82, 82);
+            padding: 0;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            margin: 0;
+        }   
+
+        #chronoWidget {
+            display: flex;
+        }
+
+        .stopWatchWidget {
+            height: auto;
+        }
+        .bold {
+            font-weight:bolder;
+            font-size: 30px;
+        }
+        #timeBoard {
+            background-color: rgb(193, 163, 128);
+        }
+    </style>
+    <!--body and dark theme styles-->
+    <style>
+        body {
+            --background-color: rgb(221, 221, 221);
+            --text-color: black;
+            --button-text-color: var(--background-color);
+ 
+
+            background-color: var(--background-color);
+            color: var(--color);
+        }
+        body.dark {
+            --background-color: black;
+            color: #dbdbdb;
+        }
+    </style>
+    <style>
+        /*clock*/
+        .clock {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+        }
+    </style>
+
+<!--
+    <script>
+        //document.querySelector('.dark-theme').addEventListener('click', () => {document.body.classList.toggle('dark') })
+        let hour = 00;
+        let minute = 00;
+        let second = 00;
+        let count = 00;
+    </script>-->
+</head>
+<body>
+    <h1>To Do List</h1>
+    <!--id="chronoWidget"-->
+    <button class="dark-theme" onclick="document.body.classList.toggle('dark')">dark </button>
+
+    <div id="chronoholder">
+        <div id="timeBoard">
+            <div class="bold" id="todayDate"></div>
+            <div id="clock"></div>
+            <div id="greet"></div>
+        </div>    
+
+
+        <div class="clock">
+            <div class="hand hour"></div>
+            <div class="hand minuete"></div>
+            <div class="hand second"></div>
+            <div class="number number1"></div>
+            <div class="number number2"></div>
+            <div class="number number3"></div>
+            <div class="number number4"></div>
+            <div class="number number5"></div>
+            <div class="number number6"></div>
+            <div class="number number7"></div>
+            <div class="number number8"></div>
+            <div class="number number9"></div>
+            <div class="number number10"></div>
+            <div class="number number11"></div>
+            <div class="number number12"></div>
+        </div>
+        <div class="stopWatchWidget">
+            <span>00:00:00</span>
+            <input type="button" class="" id="start" value="start">
+            <input type="button" id="stop" value="stop">
+            <input type="button" id="reset" value="reset">
+            <input type="button" id="lap" value="lap">
+        </div>
+    </div>
+
+    <div class="zoneContainer">
+            <input id="task-input" type="text" placeholder="Enter a task..." onkeyup="checkKey(event)">
+            <button onclick="addTask()">Add Task</button>
+
+            <div class="zoneBtn">
+                <input id="genDropArea" type="button" value="+" onclick="generateDropArea()">
+                <input id="delSelect" type="button" value="delete" onclick="deleteSel()">
+                <input id="delSelect" type="button" value="Select All">
+            </div>
+        <div id="dropContainer">
+            <ul id="task-list"></ul>
+            <div>
+                <div class="box" id="col1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <input id="zoneInput" type="text" placeholder="dropzone1">
+                    <input type="checkbox" name="" id="">
+                </div>
+            </div>
+            <div>
+                <div class="box" id="col2" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <input id="zoneInput" type="text" placeholder="dropzone2"></div>
+            </div>
+            <div>
+                <div class="box" id="col3" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <input id="zoneInput" type="text" placeholder="dropzone3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h1>cycles</h1> <h2>cues, traits, tone</h2>
+        <p>eat</p> <p>over eat, healthy</p>
+        <p>sleep</p> <p>earlier, shower earlier</p> 
+        <p>poop</p> <p>get it out sooner, eat greens</p>
+        <p>exercise</p> <p>2days</p>
+        <p>hygenie</p>
+        <p>organize</p>
+
+        type
+        achieve higher accuracy
+
+        goals and difficulties
+    </div>
+    <!--errors: my items are unable to rearranged individually idea, in a sortting manner idea
+    other things to add
+    -the items can flip back and forth
+    -
+    
+    -->
+    <!--each zone should have an array in which things can be taken out or modify. use an array modifier that is able to be taken out i via the indexes-->
+    <!--extra functionalites to be added later-->
+    <article>
+        <div class="main branch">
+            <div>Head</div>
+        </div>
+        <div class="SetActions"></div>
+        <section>
+            <div><img src="" alt="">
+            </div>
+        </section>
+        <!---->
+        <div class="card flipped" draggable="true">
+            <div class="card-inner" >
+                <div class="card-front">
+                    <h1></h1>
+                </div>
+                <div class="card-back">
+                    <h1></h1>
+                </div>
+            </div>
+        </div>
+        <div id="drop-area"></div>
+    </article>
+    <!---->
+    <nav id="navbar">
+        <ul>
+            <li>
+                <a href="">about me</a>
+            </li>
+            <li>
+                <a href="">contact and info</a>
+            </li>
+            <li>
+                <a href="">projects</a>
+            </li>
+            <li>
+                <a href="">portfolio types</a>
+            </li>
+        </ul>
+    </nav>
+    <hr>
+    <!--calendar-->
+    <table>
+        <tr>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+    <!--hamburger menu-->
+    <div></div>
+    <!--expand menu-->
+    <div></div>
+    <!--drag and drop-->
+    <script>
+        //get DOM elements
+        const deleteButton = document.getElementById('delSelect');
+        const box = document.querySelectorAll(".box");
+
+        // on dragover
+        const allowDrop = (e) => {
+            e.preventDefault();
+        }
+
+        const drag = (e) => {
+            e.dataTransfer.setData("text", e.target.id);
+        
+        }
+
+        //on drop
+        const drop = (event) => {
+            //if (box.contains("box")){
+            console.log("go")
+            event.preventDefault();
+            const data = event.dataTransfer.getData("text");
+            //event.target.appendChild(document.getElementById(data));
+
+            const dropZone = event.target;
+
+        // Check if the dropZone is the parent of the dragged item
+        if (dropZone.classList.contains('box') ) {
+            dropZone.appendChild(document.getElementById(data))}
+        //}   else {
+        //     console.log("stop")
+        // }
+        }
+
+    </script>
+    <!--drag and drop, gerator, task-->
+    <script>
+
+        function generateDropArea(){
+            const dropColm = document.createElement("div")
+            dropColm.setAttribute("class","box")
+            dropColm.setAttribute("id", "Math.random()")
+            dropColm.setAttribute("ondrop", "drop(event)")
+            dropColm.setAttribute("ondragover", "allowDrop(event)")
+
+            const colmTitle = document.createElement("input")
+            colmTitle.setAttribute("id", "zoneInput")
+            colmTitle.setAttribute("type", "text")
+            colmTitle.setAttribute("placeholder", "title")
+            
+            
+            const dropContainer = document.getElementById("dropContainer")
+            dropContainer.appendChild(dropColm)
+            dropColm.appendChild(colmTitle)
+       
+        }
+
+
+ 
+
+        function addTask() {
+                    // Get the user input<input type="checkbox" name="" id="">
+        const taskInput = document.getElementById("task-input");
+        const taskName = taskInput.value.trim();
+        
+
+ 
+
+            // Make sure the user input is not empty
+            if (taskName === "") {
+                alert("Please enter a task.");
+                return;
+            }
+            
+            // Create a new list item with the task name
+            const listItem = document.createElement("div");
+            
+                // modify list items to be related to drag and drop
+                    listItem.setAttribute("draggable", "true")
+                    listItem.setAttribute("ondragstart", "drag(event)")
+
+                //let Darray = [];
+                //let num = 0;+ num.toString()
+                listItem.setAttribute("id", Math.random() );
+                    listItem.setAttribute("class", "canDrag")
+
+                        const checkBox = document.createElement("input")
+                        checkBox.setAttribute("type","checkbox")
+                        //checkBox.setAttribute("id", Math.random() )
+                        //checkBox.setAttribute()
+
+                // Add the new list item to the task list
+                const taskList = document.getElementById("task-list");
+                taskList.appendChild(listItem);
+                
+                        listItem.appendChild(checkBox)
+                        //checkBox.insertBefore(taskName, listItem.firstChild)
+                
+                listItem.innerText = taskName;
+                //to push task name into local storage
+        /*
+        function addTodo(taskText) {
+            taskData.push(taskText); //taskdata taskText= tastName
+            //const li = document.createElement('li') 441
+            //li.innerHTML = taskText; 463
+            //taskList.appendChild(li); 459
+            localStorage.setItem('tasks', JSON.stringify(taskData));// taskdata
+            //input.value = '' 466
+        }
+        */
+                const myArray = []
+                const strigifyArray =JSON.stringify(myArray)
+                taskData.push(taskName);
+                localStorage.setItem('tasks', JSON.stringify(taskData));
+
+
+            // Clear the input field
+            taskInput.value = "";
+            //if checkBox.checked {}
+            
+        }
+        function checkKey(event) {
+            if (event.key === 'Enter') {
+                addTask();
+            }
+        }
+
+    </script>
+    <!--date related-->
+    <script>
+        var today = new Date()
+        var hourNow = today.getHours()
+        var greeting
+
+        if (hourNow> 18) {
+            greeting ='good evening';
+        } else if (hourNow> 12){
+            greeting = 'good afternoon';
+        } else if (hourNow >0) {
+            greeting ='good morning';
+        } else {
+            greeting ='';
+        }
+  
+        const greet = document.getElementById('greet')
+        greet.textContent = greeting
+    
+        function updateClock() {
+
+            const now = new Date();
+
+            const hours = now.getHours();
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const timeString = [hours, minutes, seconds].map((num) => {
+                return num < 10 ? '0${num}' : num; 
+            }).join(":");
+
+            const clock = document.getElementById("clock");
+            clock.textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateDate() {
+                const now = new Date();
+
+                const year = now.getFullYear();
+                const month = now.getMonth() + 1;
+                const day = now.getDate();
+
+                const mmddyyyy = [month, day, year].map((num) => {
+                return num < 10 ? `0${num}` : num;
+                }).join('/');
+
+                const todayDate = document.getElementById('todayDate');
+                todayDate.textContent = mmddyyyy;
+            }
+
+            // Call the function to update the date when needed
+            updateDate();
+        });
+    </script>
+    <!--card script-->
+    <script>
+        document.querySelector('.card').addEventListener('click', function() {
+            this.classList.toggle('flipped');
+        });
+    </script>
+</body>
+</html>
