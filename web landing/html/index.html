@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Portfolio</title>
+    <meta charset = "utf-8">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/background_styles.css">
+        <link rel="stylesheet" href="css/nav.css">
+        <!--link rel="stylesheet" href="cardFlip.css"-->
+        <link rel="stylesheet" href="css/projectStyle.css">
+        <link rel="stylesheet" href="css/button.css">
+  </head>
+  <script>
+    function toggle(id){
+      var divelement = document.getElementById(id);
+      if(divelement.style.display == 'none')
+        divelement.style.display ='block';
+        else
+        divelement.style.display = 'none';
+    }
+    </script>
+
+<body>
+
+    <!--this is the navbar-->
+    <section class="header">
+      <nav class = "navbar">
+        <div class="brand-title"><a href="index.html">Andre's Portfolio</a></div>
+          <a href="about.html" class ="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </a>
+
+          <!--button-->
+        <div>
+          <button onclick="toggle('container')" class = "hiddenbutton"></button>
+        </div>
+
+
+          <div class="navbar-links">
+            <ul>
+              <li><a href = "about.html" >About</a></li>
+
+              <!--dropdown -->
+              <li class ="dropdown"><a href = "projects.html" class >
+                Projects</a>
+                <div class = "dropdown-content">
+                  <a href="projects.html">portfolio</a>
+                </div>
+                <!--this is the ending list-->
+              </li>
+
+              <li><a href = "games.html">Games</a></li>
+              <li><a href = "contact.html">Contact</a></li>
+              <li>change language</li>
+            </ul>
+          </div>
+      </nav>
+    </section>
+
+
+
+  <!--this is the main body-->
+ <div id="container">
+   <div class = "pagecontainer">
+    <section class = "page">
+        <h2 class = "about">About me</h2>
+      <hr>
+        <!-- this is the intro/ the summary -->
+          <h3>hello I'm <span class="auto-type"></span> and I do stuff. I am an aspiring 2D and 3D artist with some digital back ground,
+          I want to animate 3D stuff
+          <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+          <script>
+            var typed = new Typed(".auto-type",{
+              strings: ["Andre","a web designer", "an illustrator"],
+              typeSpeed: 150,
+              backSpeed: 0,
+              loop: false
+            })
+          </script>
+          <!--Aspiring Digital musician
+          I have made some poems, and some writing,
+            so I'm also an aspiring writer-->
+          </h3>
+        <article>
+            <h2>program knowledge and skills</h2>
+          <hr>
+              <p>I am currently working with blender, and clipstudio<br>
+                I practice art with just a pencil
+                I have some experience in JavaScript
+              </p>
+        </article>
+        <section>
+            <h2>degree</h2>
+          <hr>
+              <p>highschool degree from cypress bay highschool</p>
+              <p>associates arts from broward college</p>
+          <h2>projects</h2>
+        </section>
+     </section>
+  </div>
+
+
+  <footer class = "footer">
+    <section>
+      <h1>contact information</h1>
+      <p><u>Email Me:</u></p>
+      <p>chuna10@mail.broward.edu</p>
+      <p>aandrechung@gmail.com</p>
+      <p>Phone: 754 304 2046</p>
+      <p>Merch store</p>
+      <p>Copyright - Andre Chung</p>
+    </section>
+  </footer>
+
+  <!--related to container class-->
+</div>
+</body>
+
+</html>
+  <!--
+    <p>The importance of a portfolio shows cases what skills I might display in my in career. In web design this might mean show casing web designs.</p>
+    <p> My individual portfolio should include my full name, my email and my contact, ‘about me’ page and a picture of myself. Allowing the employer to understand a bit about me.
+</p>
+    <p>There might be a project section to showcase websites I designed as well as some JavaScript projects to showcase my knowledge in JavaScript.  The portfolio might be simple with a level of color theory in mind
+</p>
+    <p>https://webflow.com/blog/web-design-portfolios
+https://kinsta.com/blog/portfolio-website/#:~:text=The%20basic%20formula%20of%20a,best%20work%2C%20and%20contact%20information.
+https://dribbble.com/search/portfolio
+</p>
+    -->

@@ -1,0 +1,50 @@
+  body{
+    height: 90vh;
+    background-color: rgba(45, 42, 63, 0.795);
+    background-image:
+    linear-gradient(45deg, transparent, transparent),
+    repeating-linear-gradient(45deg,  rgba(136, 129, 153, 0.637) 0%, rgba(114, 103, 133, 0.623) 5%, transparent 5%, transparent 7%);
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+
+  .about {
+    text-align: center;
+    text-decoration: underline;
+  }
+
+
+
+  .footer {
+
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 3.5em;
+}
+  .footer li {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* repeating-linear-gradient*/
+    /*
+    color: white;
+    font-family: sans-serif, arial, helvetica;
+    margin: 0;
+    margin-left: 0;
+    margin-right:0;
+    padding: 0;
+    */
+    /*
+    background-image: radial-gradient(circle at center center, hsla(166,0%,10%,1) 0%,rgb(35,31,31) 29%,transparent 65%),linear-gradient(90deg, rgb(56,56,56) 0%, rgb(56,56,56) 50%,rgb(56,56,56) 50%, rgb(56,56,56) 100%); background-size: 7px 7px;
+    */
+
+  /*
+.header {
+  background: #eef;
+  border-top: 10px red solid;
+  margin: 0%;
+}*/

@@ -1,0 +1,5 @@
+.game-container{
+
+    flex-basis: 60%;
+    border: 20px solid black;
+}

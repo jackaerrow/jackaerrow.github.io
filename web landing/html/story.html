@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Story</title>
+    <meta charset = "utf-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/background_styles.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/nav.css">
+        <!--link rel="stylesheet" href="cardFlip.css"-->
+        <link rel="stylesheet" href="css/projectStyle.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" href="css/button.css">
+        <link rel="stylesheet" href="css/storyStyle.css">
+  </head> 
+  <script>
+    function toggle(id){
+      var divelement = document.getElementById(id);
+      if(divelement.style.display == 'none')
+        divelement.style.display ='block';
+        else
+        divelement.style.display = 'none';
+    }  
+    </script>
+<body>
+    <!--this is the navbar-->
+    <section class="header">
+      <nav class = "navbar">
+        <div class="brand-title"><a href="index.html">Andre Chung</a></div>
+          <a href="about.html" class ="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </a>
+          <!--button-->
+          <div>
+          <button onclick="toggle('container')" class = "hiddenbutton"></button>
+        </div>
+       
+          
+          <div class="navbar-links">
+            <ul>
+              <li><a href = "about.html" >About</a></li>
+              <li><a href = "projects.html">Projects</a></li>
+              <li><a href = "games.html">Games</a></li>
+              <li><a href = "contact.html">Contact</a></li>
+              <li>change language</li>
+            </ul>
+          </div>
+      </nav>
+    </section>
+    create start
+
+<!--this is the container-->
+<section class = "page">
+  
+  <div class="title section">
+  <h1><input type="text" class="title" placeholder="Title" spellcheck="true"></h1>
+  <br>
+  <h2><input type="text" class="subtitle" placeholder="subtitle"></h2>
+  </div>
+  <Textarea></Textarea>
+  <hr>
+  
+  
+  
+  
+  <div class= "field">
+  <div class="text-story" placeholder="input text" spellcheck="true" role="textbox"cols="50" rows="10" contenteditable="true">
+
+  </div>
+  <hr>
+  <input>
+   <div buttons class="buttons">
+  <button class="storyBtn">Previous chapter</button>
+  <button class="storyBtn">Next chapter</button>
+  <button class="storyBtn">view story map</button><br>
+  <a href="createStory.html"><button>Create new story</button></a>
+  </div>
+  </div>
+
+ 
+
+</section>
+
+<div class="rte medium-editor-element" id="medium-editor-1606325012124" data-placeholder="Write the first chapter..." autocomplete="off" name="content" cols="50" rows="10" medium-editor-textarea-id="medium-editor-1606325012124" contenteditable="true" spellcheck="true" data-medium-editor-element="true" role="textbox" aria-multiline="true" data-medium-editor-editor-index="1" medium-editor-index="3a2e1cca-ce4a-523e-5862-cfaaa0eccd67" data-medium-focused="true">
+ </div>
+
+</body>
+</html>

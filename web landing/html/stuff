@@ -1,0 +1,28 @@
+let guessanswer =()
+let score = 0;
+function{
+    if(guessanswer = correctanswer){
+        print(")
+        score = +1;
+    }
+    else if (guessanswer = correctanswer){
+        score = +0;
+
+    }
+}
+let time = 200
+function timer{
+    for time = 200, -1
+    {
+
+    }
+}
+if(guessanswer=different answer){
+    score=+.5
+}
+reading files
+let reader = new FileReader();
+
+reader.onload=()
+
+reader.readAsText

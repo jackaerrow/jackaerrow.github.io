@@ -1,0 +1,149 @@
+.navbar {
+    display: flex;
+    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+  }
+  .brand-title{
+    font-size: 1.5rem;
+    margin: .5rem;
+  }
+  .brand-title a{
+  text-decoration: none;
+  color:white;
+  }
+  
+  
+  /*navbar links*/
+
+  .navbar-links {
+    height: 100%;
+  }
+  
+  .navbar-links ul {
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  
+  
+  .navbar-links li {
+    list-style: none;
+  }
+  
+  .navbar-links li a {
+  display: block;
+  text-decoration: none;
+  color: white;
+  padding: 1rem;
+  }
+  
+
+  .navbar-links li:hover {
+   background-color: #555;
+  } 
+   /*border-top: 5px #b1b1b1;*/
+  
+
+   /*
+
+  @media (max-width: 800px) {
+      .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+   
+    .navbar-links{
+      display: none;
+      width:100%;
+      }
+    .navbar-links ul{
+      width:100%;
+      flex-direction:column;
+    }
+    .navbar-links ul li {
+      text-align: center;
+    }
+    .navbar-links li a {
+      padding: .5rem 1rem;
+    }
+    .navbar-links.active{
+      display:flex;
+    }
+   */
+  /*this is the hidden button*/
+  .toggle-button {
+      display:flex;
+    }
+  .toggle-button {
+   /* padding: 9px 25px;*/
+    position: absolute;
+    top: .75rem;
+    right: 1rem;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width:30px;
+    height: 21px;
+  /*  cursor: pointer;*/
+   /* transitions: all 0.3s ease 0s*/
+  }
+  
+  .toggle-button .bar {
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    border-radius: 10px;
+  }
+  
+  
+ 
+    /* import,The container <div> - needed to position the dropdown content */
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+  
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #333;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+      
+      z-index: 1;
+    }
+  
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+    
+    
+/*
+    li.dropdown {
+      display: inline-block;
+    }
+*/
+    /* Show the dropdown menu on hover */
+    .dropdown-content a:hover {background-color: #f1f1f1;}
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
+  /*
+  .navbar-links li:hover {
+    background-color: #555;
+   } 
+
+
+  }*/
+  

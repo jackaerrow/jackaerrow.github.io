@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Structured To-Do Zones</title>
+  <style>
+    body {
+      --background-color: rgb(221, 221, 221);
+      background-color: var(--background-color);
+      color: black;
+      font-family: Arial, sans-serif;
+    }
+
+    body.dark {
+      --background-color: black;
+      background-color: var(--background-color);
+      color: #dbdbdb;
+    }
+
+    .zoneContainer {
+      background-color: burlywood;
+      padding: 20px;
+      margin: 30px auto;
+      max-width: 1000px;
+    }
+
+    .zoneInput {
+      font-size: large;
+      border: 0;
+      background-color: transparent;
+      width: 100%;
+      text-align: center;
+    }
+
+    .zoneInput:focus {
+      outline: none;
+    }
+
+    .box {
+      background-color: #f0f0f0;
+      margin: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      width: 200px;
+      min-height: 100px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .canDrag {
+      background-color: #2196f3;
+      color: white;
+      padding: 5px;
+      margin: 5px 0;
+      cursor: grab;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #dropContainer {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"], button {
+      margin: 5px;
+    }
+  </style>
+      <!--card styles-->
+    <style>
+        .card {
+            width: 200px;
+            height: 200px;
+            perspective: 1000px;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .card.flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        .card-front {
+            background-color: #2196f3;
+            color: #fff;
+        }
+
+        .card-back {
+            background-color: #f44336;
+            color: #fff;
+            transform: rotateY(180deg);
+        }        
+    </style>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.17/index.global.min.js"></script>
+</head>
+<body>
+  <h1>To Do List</h1>
+  <button onclick="document.body.classList.toggle('dark')">Toggle Dark Theme</button>
+    <div id="calendar"></div>
+
+  <div class="zoneContainer">
+    <input id="task-input" type="text" placeholder="Enter a task..." onkeyup="checkKey(event)">
+    <button onclick="addTask()">Add Task</button>
+    <button onclick="generateDropArea()">+ Add Zone</button>
+    <button onclick="deleteTask()"> delete task</button>
+
+    <div id="dropContainer"></div>
+  </div>
+
+  <script>
+    let zoneData = {
+      zones: []
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const calendarEl = document.getElementById('calendar');
+
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    selectable: true,
+    events: [
+        // Example: you could populate this from localStorage later
+        { title: 'Sample Task', start: '2025-04-10' }
+    ],
+    dateClick: function(info) {
+        alert('Clicked on: ' + info.dateStr);
+    }
+    });
+
+    calendar.render();
+    });
+
+
+    function saveToStorage() {
+      localStorage.setItem("zoneData", JSON.stringify(zoneData));
+    }
+
+    function loadFromStorage() {
+      const saved = localStorage.getItem("zoneData");
+      if (saved) {
+        zoneData = JSON.parse(saved);
+      }
+      renderZones();
+    }
+
+    function renderZones() {
+      const container = document.getElementById("dropContainer");
+      container.innerHTML = "";
+    
+
+
+      zoneData.zones.forEach(zone => {
+        const dropColm = document.createElement("div");
+        dropColm.className = "box";
+        dropColm.id = zone.id;
+        dropColm.ondrop = drop;
+        dropColm.ondragover = allowDrop;
+
+        const titleInput = document.createElement("input");
+        titleInput.className = "zoneInput";
+        titleInput.type = "text";
+        titleInput.value = zone.title;
+        titleInput.oninput = () => {
+          zone.title = titleInput.value;
+          saveToStorage();
+        };
+        const deleteBtn = document.createElement("button");
+        deleteBtn.textContent = "🗑 Delete Zone";
+        deleteBtn.onclick = () => deleteZone(zone.id);
+        dropColm.appendChild(deleteBtn);
+
+        dropColm.appendChild(titleInput);
+        dropColm.setAttribute("draggable", "true");
+        dropColm.ondragstart = zoneDragStart;
+        dropColm.ondragover = allowDrop;
+        dropColm.ondrop = zoneDrop;
+
+
+        zone.tasks.forEach(task => {
+          const taskItem = createTaskElement(task, zone.id);
+          dropColm.appendChild(taskItem);
+        });
+
+        container.appendChild(dropColm);
+      });
+    }
+
+    function deleteZone(zoneId) {
+    const confirmDelete = confirm("Are you sure you want to delete this zone? All tasks inside will be lost.");
+    if (!confirmDelete) return;
+
+    zoneData.zones = zoneData.zones.filter(z => z.id !== zoneId);
+    saveToStorage();
+    renderZones();
+    }
+
+
+    function createTaskElement(task, zoneId) {
+      const listItem = document.createElement("div");
+      listItem.className = "canDrag";
+      listItem.id = task.id;
+      listItem.draggable = true;
+      listItem.ondragstart = drag;
+      listItem.innerText = task.text;
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.checked = task.checked;
+      checkbox.onclick = (e) => {
+        e.stopPropagation();
+        const zone = zoneData.zones.find(z => z.id === zoneId);
+        const found = zone.tasks.find(t => t.id === task.id);
+        found.checked = checkbox.checked;
+        saveToStorage();
+      };
+
+      listItem.appendChild(checkbox);
+      return listItem;
+    }
+
+    function addTask() {
+      const taskInput = document.getElementById("task-input");
+      const taskName = taskInput.value.trim();
+      if (!taskName) return alert("Enter a task");
+
+      const taskId = `task_${Math.random().toString(36).substr(2, 9)}`;
+      const task = { id: taskId, text: taskName, checked: false };
+
+      if (zoneData.zones.length === 0) return alert("Add a zone first");
+      zoneData.zones[0].tasks.push(task);
+
+      saveToStorage();
+      renderZones();
+      taskInput.value = "";
+    }
+
+    function deleteTask() {
+    zoneData.zones.forEach(zone => {
+    zone.tasks = zone.tasks.filter(task => !task.checked);
+    });
+    saveToStorage();
+    renderZones();
+    }
+
+    function generateDropArea() {
+      const zoneId = `zone_${Math.random().toString(36).substr(2, 9)}`;
+      zoneData.zones.push({ id: zoneId, title: "New Zone", tasks: [] });
+      saveToStorage();
+      renderZones();
+    }
+
+    function allowDrop(e) {
+      e.preventDefault();
+    }
+
+    function drag(e) {
+      e.dataTransfer.setData("text", e.target.id);
+    }
+
+    function drop(e) {
+      e.preventDefault();
+      const taskId = e.dataTransfer.getData("text");
+      const targetZoneId = e.currentTarget.id;
+
+      let draggedTask;
+      for (const zone of zoneData.zones) {
+        const index = zone.tasks.findIndex(t => t.id === taskId);
+        if (index !== -1) {
+          draggedTask = zone.tasks.splice(index, 1)[0];
+          break;
+        }
+    }
+
+      const targetZone = zoneData.zones.find(z => z.id === targetZoneId);
+      if (draggedTask && targetZone) {
+        targetZone.tasks.push(draggedTask);
+        saveToStorage();
+        renderZones();
+      }
+    }
+
+    let draggedZoneId = null;
+
+    function zoneDragStart(e) {
+    draggedZoneId = e.target.id;
+    }
+
+    function zoneDrop(e) {
+    e.preventDefault();
+    const targetZoneId = e.currentTarget.id;
+
+    if (draggedZoneId === targetZoneId) return;
+
+    const draggedIndex = zoneData.zones.findIndex(z => z.id === draggedZoneId);
+    const targetIndex = zoneData.zones.findIndex(z => z.id === targetZoneId);
+
+    if (draggedIndex !== -1 && targetIndex !== -1) {
+        const [draggedZone] = zoneData.zones.splice(draggedIndex, 1);
+        zoneData.zones.splice(targetIndex, 0, draggedZone);
+
+        saveToStorage();
+        renderZones();
+    }
+    }
+
+    function checkKey(event) {
+      if (event.key === 'Enter') {
+        addTask();
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadFromStorage);
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Portfolio</title>
+    <meta charset = "utf-8">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/background_styles.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/nav.css">
+        <!--link rel="stylesheet" href="cardFlip.css"-->
+        <link rel="stylesheet" href="css/projectStyle.css">
+        <link rel="stylesheet" href="css/footer.css">
+        <link rel="stylesheet" href="css/button.css">
+        <link rel="stylesheet" href="css/storyStyle.css">
+  </head> 
+  <script>
+    function toggle(id){
+      var divelement = document.getElementById(id);
+      if(divelement.style.display == 'none')
+        divelement.style.display ='block';
+        else
+        divelement.style.display = 'none';
+    }  
+    </script>
+<body>
+    <!--this is the navbar-->
+    <section class="header">
+      <nav class = "navbar">
+        <div class="brand-title"><a href="index.html">Andre Chung</a></div>
+          <a href="about.html" class ="toggle-button">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+          </a>
+          <!--button-->
+          <div>
+          <button onclick="toggle('container')" class = "hiddenbutton"></button>
+        </div>
+       
+          
+          <div class="navbar-links">
+            <ul>
+              <li><a href = "about.html" >About</a></li>
+              <li><a href = "projects.html">Projects</a></li>
+              <!--create a drop down meny for project or orientate it so that its fine idea, -->
+              <li><a href = "games.html">Games</a></li>
+              <li><a href = "contact.html">Contact</a></li>
+              <li>change language</li>
+              <!--create a drop down menu for change language-->
+            </ul>
+          </div>
+      </nav>
+    </section>
+<!--some ideas submit story submit tags-->
+    <input class = "addTitle" placeholder="TITLE">
+    <input class = "addsubtitle" placeholder="subtitle">
+    <button class = "add tags"></button>
+    <button class = "subtmitStory"> submit story</button>
+    </body>
+    </html>

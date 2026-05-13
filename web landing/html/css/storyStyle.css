@@ -1,0 +1,40 @@
+.page {
+   display: flex;
+   flex-direction: column;
+    background-color: #eee;
+    color: black;
+    padding: 2px;
+    margin: 3% 3% 3% 3%;
+    border-radius: 5px;
+    height:99vh;
+    justify-content: center;
+    justify-content: space-around;
+    max-height: fit-content;
+    flex-wrap: wrap;
+    overflow:hidden
+    
+  }
+  .field{
+      
+  }
+.text-story{
+    background-color: #ee3;
+    
+    max-width: 100vh;
+    
+}
+.text-story{
+    height: 30vh;
+    background-color: #ee6;
+}
+
+.buttons{
+    background-color: #4ee;
+    position: relative;
+}
+
+.storyBtn{
+    background-color: #ee7;
+    border: none;
+    overflow:hidden;
+}

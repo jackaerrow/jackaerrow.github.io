@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Portfolio</title>
+    <meta charset = "utf-8">
+    <link rel="stylesheet" href="css/background_styles.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <!--link rel="stylesheet" href="cardFlip.css"-->
+    <link rel="stylesheet" href="css/projectStyle.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="cardFlip.css">
+    <script src="https://kit.fontawesome.com/54d570a267.js" crossorigin="anonymous"></script>
+    <script src="script.js" defer></script>
+  </head> 
+  <style>
+    #test{
+      background-color: aliceblue;
+      width: 60px;
+    }
+
+  </style>
+  <body>
+    <div class="card middle">
+        <div class="front">
+          <img src="img.jpg" alt="">
+        </div>
+        <div class="back">
+          <div class="back-content middle">
+            <h2>Andre</h2>
+            <span>Youtube Channel</span>
+            <div class="sm">
+              <a href ="#" ><i class="fab fa-facebook-f"></i></a>
+              <a href ="#" ><i class="fab fa-twitter"></i></a>
+              <a href ="#" ><i class="fab fa-youtube"></i></a>
+              <a href ="#" ><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+      function toggle(id){
+        var divelement = document.getElementById(id);
+        if(divelement.style.display == 'none')
+          divelement.style.display ='block';
+          else
+          divelement.style.display = 'none';
+      }  
+      </script>
+      <!--<img src="assets/designnoodles.jpg" class = "testing">-->
+      <div>
+        <button onclick="toggleda('red')">the hidden button</button>
+      </div>
+
+      <div id = "test">blue</div>
+
+      <script>
+        function toggleda(className){
+          var divelement = document.getElementsByClassName(className);
+          if(divelement.style.display == 'none')
+            divelement.style.display ='block';
+            else
+            divelement.style.display = 'none';
+        }  
+        </script>
+<input id="guess" placeholder="username">
+        <div class = "red">red</div>
+        
+  </body>
+  </html>
